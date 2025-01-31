@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Animation</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        #container {
+            height: 100vh;
+            background-color: skyblue;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cloud {
+            width: 200px;
+            height: 80px;
+            border-radius: 40px;
+            position: absolute;
+            background-color: whitesmoke;
+        }
+
+        .cloudBubble1 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            background-color: whitesmoke;
+            position: absolute;
+            top: -50px;
+            left: 30px;
+        }
+
+        .cloudBubble2 {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background-color: whitesmoke;
+            position: absolute;
+            top: -30px;
+            right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="cloud">
+            <div class="cloudBubble1"></div>
+            <div class="cloudBubble2"></div>
+        </div>
+    </div>
+    <script>
+        const containerElement = document.getElementById('container');
+        containerElement.innerHTML = `
+        <div class="cloud">
+            <div class="cloudBubble1"></div>
+            <div class="cloudBubble2"></div>
+        </div>`.repeat(20);
+
+        const elements = document.getElementsByClassName('cloud');
+        for (let j = 0; j < elements.length; j++) {
+            const element = elements[j];
+
+            element.style.top = (Math.random() * 100) + '%';
+            element.style.left = (Math.random() * 100) + '%';
+            element.style.transform = "scale(" + ((Math.random() * 0.7) + 0.3) + ")";
+
+            const intervalTimeInSeconds = (Math.random() * 14) + 6;
+            element.style.transition = "all linear " + intervalTimeInSeconds + "s";
+
+            const startRight = Math.random() > 0.5;
+
+            setTimeout(() => {
+                element.style.left = startRight ? '100%' : '-50%';
+            }, 100);
+
+            let i = startRight ? 1 : 0;
+            setInterval(() => {
+                if (i % 2 === 0) {
+                    element.style.left = '100%';
+                } else {
+                    element.style.left = '-50%';
+                }
+                i += 1;
+            }, intervalTimeInSeconds * 1000);
+        }
+    </script>
+</body>
+</html>
